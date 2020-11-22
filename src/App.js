@@ -7,7 +7,7 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <NavBar title = 'Github Search App' icon = 'Github Icon'/>
+        <NavBar />
         </div>
       
     )
