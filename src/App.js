@@ -6,9 +6,13 @@ import Users from './Users';
 import Search from './components/Search';
 
 class App extends React.Component {
-    state = {
-        users: [],
-        loading : false
+    constructor() {
+        super();
+        this.state = {
+            users: [],
+            loading: false
+        }
+        this.searchUsers = this.searchUsers.bind(this);
     }
     async componentDidMount() {
         this.setState({
@@ -16,27 +20,39 @@ class App extends React.Component {
         });
         const res = await axios.get("https://api.github.com/users");
         this.setState({
-            users: res.data
-        });
-        this.setState({
             users: res.data,
             loading: false
         });
     }
+    async searchUsers(text) {
+        this.setState({
+            loading: true
+        });
+        const res = await axios.get(`https://api.github.com/search/users?q=${text}`);
+        this.setState({
+            users: res.data.items,
+            loading: false
+        });
+    }
+    clearUsers = () => {
+        this.setState({
+            users: []
+        })
+    }
     render() {
         return (
             <div>
-              
                 <NavBar />
-                <Search />
                 <div className="container">
+                    <Search searchUsers={this.searchUsers} clearUsers={this.clearUsers} />
                     <Users users={this.state.users} loading={this.state.loading} />
-
                 </div>
             </div>
         )
     }
+
 }
+
 
 
 
