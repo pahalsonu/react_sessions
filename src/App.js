@@ -9,6 +9,8 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Alert from "./components/Alert";
 
 import About from './components/About';
+
+import User from './components/User'
 class App extends React.Component {
     constructor() {
         super();
@@ -99,6 +101,18 @@ class App extends React.Component {
                                     <About />
                                 )}
                             />
+                            <Route
+                                exact
+                                path="/user/:login"
+                                render={(props) => (
+                                    <User
+                                        {...props}
+                                        getUser={this.getUser}
+                                        user={this.state.user}
+                                        loading={this.state.loading}
+                                    />
+                                )}
+                            />
                         </Switch>
                     </div>
                 </div>
@@ -107,8 +121,6 @@ class App extends React.Component {
     }
 
 }
-
-
 
 
 
