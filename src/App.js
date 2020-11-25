@@ -1,16 +1,22 @@
 import React from 'react';
 import axios from 'axios';
+import React, { Fragment } from 'react';
 import './App.css';
 import NavBar from './components/Navbar';
 import Users from './Users';
 import Search from './components/Search';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import Alert from "./components/Alert";
+
+import About from './components/About';
 
 class App extends React.Component {
     constructor() {
         super();
         this.state = {
             users: [],
-            loading: false
+            loading: false,
+            alert: null
         }
         this.searchUsers = this.searchUsers.bind(this);
     }
@@ -39,19 +45,55 @@ class App extends React.Component {
             users: []
         })
     }
+    setAlert = (msg, type) => {
+        this.setState({
+            alert: {
+                msg: msg,
+                type: type
+            }
+        });
+        setTimeout(() => {
+            this.setState({
+                alert: null
+            });
+        }, 5000);
+    }
     render() {
         return (
-            <div>
-                <NavBar />
-                <div className="container">
-                    <Search searchUsers={this.searchUsers} clearUsers={this.clearUsers} />
-                    <Users users={this.state.users} loading={this.state.loading} />
+            <Router>
+                <div>
+                    <NavBar />
+                    <div className="container">
+                        <Alert alert={this.state.alert} />
+                        <Route
+                            path="/"
+                            render={() => (
+                                <Fragment>
+                                    <Search searchUsers={this.searchUsers}
+                                        clearUsers={this.clearUsers}
+                                        showClear={this.state.users.length > 0 ? true : false}
+                                        setAlert={this.setAlert}
+                                    />
+                                    <Users users={this.state.users}
+                                        loading={this.state.loading}
+                                    />
+                                </Fragment>
+                            )}
+                        />
+                        <Route
+                            path="/about"
+                            render={() => (
+                                <About />
+                            )}
+                        />
+                    </div>
                 </div>
-            </div>
+            </Router>
         )
     }
 
 }
+
 
 
 
