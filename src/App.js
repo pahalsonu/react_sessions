@@ -3,6 +3,7 @@ import axios from 'axios';
 import './App.css';
 import NavBar from './components/Navbar';
 import Users from './Users';
+import Search from './components/Search';
 
 class App extends React.Component {
     state = {
@@ -25,7 +26,9 @@ class App extends React.Component {
     render() {
         return (
             <div>
+              
                 <NavBar />
+                <Search />
                 <div className="container">
                     <Users users={this.state.users} loading={this.state.loading} />
 
