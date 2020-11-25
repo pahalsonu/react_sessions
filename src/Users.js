@@ -1,20 +1,17 @@
 import React, { Component } from 'react';
 
 import UserItem from './components/UserItems';
+import Loading from './components/Loading'
 
-
-class Users extends Component {
-
-    render() {
-        return (
-            <div style={userStyle}>
-                { this.props.users.map(user => (
-                    <UserItem key={user.id}
-                        user={user}
-                    />
-                ))}
-            </div>
-        )
+const Users = (props) => {
+    if (props.loading) {
+        return <Loading />;
+    } else {
+        return <div style={userStyle}>
+            {props.users.map((user) => (
+                <UserItem key={user.id} user={user}  />
+            ))}
+        </div>
     }
 }
 
