@@ -14,6 +14,7 @@ class App extends React.Component {
         super();
         this.state = {
             users: [],
+            user: {},
             loading: false,
             alert: null
         }
@@ -56,6 +57,18 @@ class App extends React.Component {
                 alert: null
             });
         }, 5000);
+    }
+    //Get Single User Data
+    getUser = async (username) => {
+        this.setState({
+            loading: true
+        });
+        const res = await axios.get(`https://api.github.com/users/${username}`);
+        this.setState({
+            user: res.data,
+            loading: false
+        })
+
     }
     render() {
         return (
