@@ -11,6 +11,7 @@ import Alert from "./components/Alert";
 import About from './components/About';
 
 import User from './components/User'
+
 class App extends React.Component {
     constructor() {
         super();
@@ -18,7 +19,8 @@ class App extends React.Component {
             users: [],
             user: {},
             loading: false,
-            alert: null
+            alert: null,
+            repos: []
         }
         this.searchUsers = this.searchUsers.bind(this);
     }
@@ -72,6 +74,17 @@ class App extends React.Component {
         })
 
     }
+    //Get User Repos
+    getUserRepos = async (username) => {
+        this.setState({
+            loading: true
+        });
+        const res = await axios.get(`https://api.github.com/users/${username}/repos?per_page=5&sort=created:asc`);
+        this.setState({
+            repos: res.data,
+            loading: false
+        })
+    }
     render() {
         return (
             <Router>
@@ -110,6 +123,8 @@ class App extends React.Component {
                                         getUser={this.getUser}
                                         user={this.state.user}
                                         loading={this.state.loading}
+                                        repos={this.state.repos}
+                                        getUserRepos={this.getUserRepos}
                                     />
                                 )}
                             />
