@@ -9,6 +9,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Alert from "./components/Alert";
 
 import About from './components/About';
+import Dummy from './components/Dummy';
 
 import User from './components/User'
 
@@ -111,7 +112,7 @@ class App extends React.Component {
                             <Route
                                 exact path="/about"
                                 render={() => (
-                                    <About />
+                                    <Dummy />
                                 )}
                             />
                             <Route
