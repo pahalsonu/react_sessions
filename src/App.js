@@ -9,7 +9,8 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Alert from "./components/Alert";
 
 import About from './components/About';
-
+// import GitHub context into App.js
+import GitHubState from './context/GitHub/GitHubState'
 
 import User from './components/User'
 
@@ -32,14 +33,7 @@ function App() {
         fetchData();
     }, []);
 
-    //Search User Function which is going as props to Search Component
-    const searchUsers = async (text) => {
-        setLoading(true);
-        const res = await axios.get(`https://api.github.com/search/users?q=${text}`);
-        setUsers(res.data.items);
-        setLoading(false);
-    }
-
+   
     //Get Single User Data
     const getUser = async (username) => {
         setLoading(true);
@@ -66,7 +60,8 @@ function App() {
         }, 3000);
     }
     return (
-        <Router>
+      <GitHubState>
+            <Router>
             <div>
                 <NavBar />
                 <div className="container">
@@ -76,7 +71,7 @@ function App() {
                             exact path="/"
                             render={() => (
                                 <Fragment>
-                                    <Search searchUsers={searchUsers}
+                                    <Search 
                                         clearUsers={clearUsers}
                                         showClear={users.length > 0 ? true : false}
                                         setAlert={showAlert}
@@ -111,6 +106,7 @@ function App() {
                 </div>
             </div>
         </Router>
+      </ GitHubState>
     )
 }
 
